@@ -1,0 +1,39 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Jun 30 09:57:12 2021
+@author: wzh
+参考自：https://blog.csdn.net/weixin_40123108/article/details/83509838
+"""
+
+import torch
+
+##基础批归一化
+def simple_batch_norm_1d(x, gamma, beta):
+    eps = 1e-5
+    x_mean = torch.mean(x, dim=0, keepdim=True) # 保留维度进行 broadcast
+    x_var = torch.mean((x - x_mean) ** 2, dim=0, keepdim=True)
+    x_hat = (x - x_mean) / torch.sqrt(x_var + eps)
+    return gamma.view_as(x_mean) * x_hat + beta.view_as(x_mean)
+
+##测试的时候不能用测试的数据集去算均值和方差，而是用训练的时候算出的移动平均均值和方差去代
+def batch_norm_1d(x, gamma, beta, is_training, moving_mean, moving_var, moving_momentum=0.1):
+    eps = 1e-5
+    x_mean = torch.mean(x, dim=0, keepdim=True) # 保留维度进行 broadcast
+    x_var = torch.mean((x - x_mean) ** 2, dim=0, keepdim=True)
+    if is_training:
+        x_hat = (x - x_mean) / torch.sqrt(x_var + eps)
+        moving_mean[:] = moving_momentum * moving_mean + (1. - moving_momentum) * x_mean
+        moving_var[:] = moving_momentum * moving_var + (1. - moving_momentum) * x_var
+    else:
+        x_hat = (x - moving_mean) / torch.sqrt(moving_var + eps)
+    return gamma.view_as(x_mean) * x_hat + beta.view_as(x_mean)
+
+##
+x = torch.arange(15.0).view(5, 3) #整型填15，浮点型填15.0，就可以自动转换数据类型了
+gamma = torch.ones(x.shape[1])
+beta = torch.zeros(x.shape[1])
+print('before bn: ')
+print(x)
+y = simple_batch_norm_1d(x, gamma, beta)
+print('after bn: ')
+print(y)
