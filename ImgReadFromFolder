@@ -21,11 +21,10 @@ def get_img_list(dir, firelist, ext=None):
 
     return firelist
 
-def read_img():
-    image_path = './data'
-    imglist = get_img_list(image_path, [], 'jpg')
+def read_img(image_path):
+    imglist = get_img_list(image_path, [], 'jpg')   #指定文件格式为jpg
     imgall = []
-    cv2.namedWindow("test",cv2.WINDOW_NORMAL)
+    cv2.namedWindow("test",cv2.WINDOW_NORMAL)   #窗口大小可变
     for imgpath in imglist:
         # print(imgpath)
         # imaname = os.path.split(imgpath)[1]  # 分离文件路径和文件名后获取文件名（包括了后缀名）
@@ -39,5 +38,5 @@ def read_img():
     return imgall
 
 if __name__ == '__main__':
-    imgall = read_img()
+    imgall = read_img('./data')
     print(imgall.__len__())
