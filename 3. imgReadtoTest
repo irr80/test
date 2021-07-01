@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Jul  1 11:12:45 2021
+# 两种读图方式，循环读入文件夹下的图像进行测试，验证resNet50的训练模型的准确率
+@author: wzh
+"""
 import torch
 import glob
 import cv2
