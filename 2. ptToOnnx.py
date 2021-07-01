@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Wed Jun 30 15:32:27 2021
-
+# pt格式转onnxruntime下的onnx格式，便于多个框架之间互测
 @author: wzh
 """
 
