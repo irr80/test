@@ -1,3 +1,6 @@
+#include <iostream>
+using namespace std;
+
 void test(int** a, int num)
 {
 	for (int k = 0; k < 3; k++)
