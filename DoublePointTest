@@ -1,0 +1,36 @@
+void test(int** a, int num)
+{
+	for (int k = 0; k < 3; k++)
+		for (int w = 0; w < 2; w++)
+			cout << a[k][w] << endl;
+}
+int main() {
+	int sz[3][2] = { {1,2},{3,4},{5,6} };
+	//int (*m)[2] = sz;
+	//int **p = new int*[6];
+	//for(int k=0;k<3;k++)
+	//	p[k] = m[k];
+	//test(p, 3);
+	int **p2Ary = new int*[3];
+
+	for (int i = 0; i < 3; i++)
+	{
+		p2Ary[i] = new int[2];
+		for (int j = 0; j < 2; j++)
+			p2Ary[i][j]=sz[i][j];
+	}
+
+	test(p2Ary, 3);
+
+	for (int i = 0; i < 3; i++)
+		delete[]p2Ary[i];
+	delete[]p2Ary;
+	//int a[10];
+	//int(*parray)[10] = &a;
+	//int(**pparray)[10] = &parray;
+
+	////int **p = (int **)sz;
+	//int(*q)[2] = sz;
+	//int(**p)[2] = &q;
+	return 0;
+}
